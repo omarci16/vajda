@@ -14,17 +14,25 @@
   // Mobile menu
   const toggle = document.querySelector('.menu-toggle');
   const mobile = document.querySelector('.mobile-menu');
+  const closeMobile = () => {
+    mobile.classList.remove('open');
+    toggle.classList.remove('open');
+    document.body.style.overflow = '';
+  };
   if (toggle && mobile) {
     toggle.addEventListener('click', () => {
       const open = mobile.classList.toggle('open');
       toggle.classList.toggle('open', open);
       document.body.style.overflow = open ? 'hidden' : '';
     });
-    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mobile.classList.remove('open');
-      toggle.classList.remove('open');
-      document.body.style.overflow = '';
-    }));
+    mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobile));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobile.classList.contains('open')) closeMobile();
+    });
+    // Close on resize past mobile breakpoint (orientation flip, viewport widen)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 960 && mobile.classList.contains('open')) closeMobile();
+    });
   }
 
   // FAQ

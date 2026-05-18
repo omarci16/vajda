@@ -632,6 +632,15 @@ section { padding: clamp(72px, 10vw, 140px) 0; position: relative; }
 /* ---------- FAQ ---------- */
 .faq-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: clamp(40px, 6vw, 80px); align-items: start; }
 @media (max-width: 900px) { .faq-grid { grid-template-columns: 1fr; } }
+.faq-title {
+  font-family: var(--f-display); font-weight: 800;
+  font-size: clamp(36px, 4.4vw, 56px);
+  line-height: 1.04; letter-spacing: -0.03em;
+  margin-top: 12px; text-wrap: balance;
+}
+.faq-title em { color: var(--amber-2); font-style: normal; }
+.faq-intro { margin-top: 20px; color: var(--ink-3); }
+.faq-intro a { border-bottom: 1px solid currentColor; }
 .faq-list { border-top: 1px solid var(--ink); }
 .faq-item { border-bottom: 1px solid var(--line-2); }
 .faq-q {
@@ -878,4 +887,594 @@ section { padding: clamp(72px, 10vw, 140px) 0; position: relative; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .marquee-track { animation: none; }
   .area-map .pin.main, .topbar-right .live-dot { animation: none; }
+}
+
+/* =========================================================
+   MOBILE — Editorial refinements (≤ 720px)
+   Goal: state-of-the-art mobile layout — readable type,
+   thumb-friendly tap targets, deliberate spacing, safe-area
+   handling, iOS form-zoom prevention, polished nav.
+   ========================================================= */
+@media (max-width: 720px) {
+
+  /* === Foundation === */
+  html, body { -webkit-tap-highlight-color: transparent; }
+  body { font-size: 15.5px; line-height: 1.55; }
+  :root { --pad: 22px; --maxw: 100%; }
+  section { padding: 64px 0; }
+  a, button { -webkit-tap-highlight-color: transparent; }
+
+  /* === Top utility bar — hidden on mobile (phone is on floating CTA) === */
+  .topbar { display: none; }
+
+  /* === Header — FIXED, SOLID, ALWAYS VISIBLE on mobile === */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 60;
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top);
+  }
+  .header.scrolled { border-bottom-color: var(--line-2); }
+  /* Push hero down so it doesn't hide under fixed header */
+  main { padding-top: 64px; }
+
+  .nav {
+    height: 64px;
+    gap: 12px;
+    grid-template-columns: 1fr auto;  /* brand | hamburger (no CTA, no menu) */
+  }
+  .brand {
+    font-size: 17px;
+    gap: 10px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .brand-mark {
+    width: 36px; height: 36px;
+    font-size: 16px;
+    border-radius: 2px;
+  }
+  .brand-mark::after { inset: 5px 4px; }
+  .brand-name { line-height: 1.05; }
+  .brand-name small { display: none; }
+
+  /* Hide CTA on mobile — floating call button covers this need */
+  .nav-cta { display: none; }
+
+  /* === HAMBURGER — big, obvious, clearly tappable === */
+  .menu-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1.5px solid var(--ink);
+    border-radius: 4px;
+    background: var(--bg);
+    color: var(--ink);
+    transition: background .2s ease, color .2s ease;
+  }
+  .menu-toggle:active,
+  .menu-toggle.open {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    position: relative;
+    border-radius: 1px;
+    transition: background .2s ease;
+  }
+  .menu-toggle span::before,
+  .menu-toggle span::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform .25s ease, top .25s ease;
+  }
+  .menu-toggle span::before { top: -7px; }
+  .menu-toggle span::after  { top:  7px; }
+  .menu-toggle.open span { background: transparent; }
+  .menu-toggle.open span::before { top: 0; transform: rotate(45deg); }
+  .menu-toggle.open span::after  { top: 0; transform: rotate(-45deg); }
+
+  /* === Mobile menu — full coverage below fixed header === */
+  .mobile-menu {
+    position: fixed;
+    inset: auto;
+    top: calc(64px + env(safe-area-inset-top));
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg);
+    z-index: 55;
+    transform: translateY(-110%);
+    transition: transform .35s cubic-bezier(.7,.1,.2,1);
+    padding: 8px var(--pad) calc(40px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .mobile-menu.open { transform: translateY(0); }
+
+  .mobile-menu a:not(.mobile-cta) {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--f-display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .mobile-menu a:not(.mobile-cta) small {
+    font-family: var(--f-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  /* Phone shortcut inside menu (above CTA) */
+  .mobile-menu::after {
+    content: "☎ +36 30 555 0192 · H–P 07–18";
+    display: block;
+    margin-top: 20px;
+    padding: 14px 16px;
+    background: var(--bg-3);
+    font-family: var(--f-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    text-align: center;
+    border-radius: 2px;
+  }
+
+  /* Mobile menu CTA — premium primary action (higher specificity to beat .mobile-menu a) */
+  .mobile-menu a.mobile-cta {
+    margin-top: 14px;
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 18px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 15.5px;
+    letter-spacing: -0.005em;
+    border: 0;
+    border-radius: 2px;
+    transition: background .2s ease;
+  }
+  .mobile-menu a.mobile-cta:hover,
+  .mobile-menu a.mobile-cta:active { background: var(--amber-2); color: var(--bg); }
+  .mobile-menu a.mobile-cta .arrow {
+    color: var(--bg);
+    font-size: 17px;
+    line-height: 1;
+    transition: transform .2s ease;
+  }
+  .mobile-menu a.mobile-cta:hover .arrow { transform: translateX(3px); }
+
+  /* === Hero === */
+  .hero { padding: 36px 0 56px; }
+  .hero-grid { gap: 32px; }
+  .hero-meta {
+    gap: 10px 18px;
+    font-size: 10.5px;
+    margin-bottom: 22px;
+    letter-spacing: 0.08em;
+  }
+  .hero-meta span { gap: 7px; }
+  .hero h1 {
+    font-size: clamp(42px, 11vw, 60px);
+    line-height: 0.97;
+    letter-spacing: -0.035em;
+    margin: 0 0 24px;
+  }
+  .hero-lede {
+    font-size: 15.5px;
+    line-height: 1.6;
+    margin: 0 0 26px;
+    max-width: none;
+  }
+  .hero-ctas {
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-ctas .btn {
+    justify-content: center;
+    padding: 15px 18px;
+    font-size: 14.5px;
+  }
+
+  .hero-rule {
+    margin-top: 36px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .hero-rule > div,
+  .hero-rule > div + div {
+    padding: 22px 0 22px 14px;
+    border-right: 1px solid var(--line-2);
+  }
+  .hero-rule > div:nth-child(odd) { padding-left: 0; padding-right: 14px; }
+  .hero-rule > div:nth-child(even) { border-right: 0; padding-right: 0; padding-left: 14px; }
+  .hero-rule > div:nth-child(1),
+  .hero-rule > div:nth-child(2) { border-bottom: 1px solid var(--line-2); }
+  .hero-rule > div:last-child { padding-right: 0; }
+  .hero-rule .num { font-size: 32px; margin-bottom: 8px; letter-spacing: -0.04em; }
+  .hero-rule .num small { font-size: 14px; }
+  .hero-rule .lbl { font-size: 10px; letter-spacing: 0.1em; }
+
+  .hero-visual { aspect-ratio: 5/6; }
+  .hero-visual .stamp { top: 16px; left: 16px; right: 16px; font-size: 10px; }
+  .hero-visual .badge-tape {
+    left: 14px; right: 14px; bottom: 14px;
+    padding: 14px 14px;
+    gap: 12px;
+  }
+  .hero-visual .badge-tape .num { font-size: 30px; }
+  .hero-visual .badge-tape .txt { font-size: 11px; line-height: 1.35; }
+  .hero-visual .badge-tape .txt strong { font-size: 12px; }
+  .hero-visual .badge-tape .ico { width: 30px; height: 30px; }
+  .hero-visual .badge-tape .ico svg { width: 15px; height: 15px; }
+
+  .hero-marquee { margin-top: 36px; padding: 13px 0; }
+  .hero-marquee::before, .hero-marquee::after { width: 40px; }
+  .marquee-track { font-size: 16px; gap: 32px; }
+  .marquee-track span { gap: 32px; }
+
+  /* === Section heads === */
+  .section-head {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  .section-head h2 {
+    font-size: clamp(30px, 8vw, 40px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .section-head p { font-size: 14.5px; line-height: 1.6; }
+  .eyebrow { font-size: 11px; margin-bottom: 14px; }
+
+  /* === Services === */
+  .services-grid { grid-template-columns: 1fr; }
+  .service {
+    padding: 26px 22px 22px;
+    min-height: 0;
+  }
+  .service h3 { font-size: 20px; margin: 14px 0 8px; line-height: 1.2; }
+  .service p { font-size: 14px; margin-bottom: 14px; line-height: 1.5; }
+  .service-icon { width: 48px; height: 48px; margin-top: 16px; }
+  .service-icon svg { width: 22px; height: 22px; }
+  .service-num { font-size: 10px; }
+  .service-meta { font-size: 10px; letter-spacing: 0.1em; }
+  .service-cta { padding-top: 14px; margin-top: 14px; font-size: 10.5px; }
+
+  /* === About === */
+  .about-grid { gap: 36px; }
+  .about-portrait {
+    aspect-ratio: 4/5;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  .about-portrait .since { font-size: 42px; }
+  .about-portrait .caption { left: 18px; right: 18px; bottom: 18px; }
+  .about-portrait .caption strong { font-size: 17px; }
+  .about-portrait .label { left: 18px; top: 18px; font-size: 9.5px; }
+
+  .about-body h2 {
+    font-size: clamp(30px, 8vw, 40px);
+    margin-bottom: 20px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .about-body p {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 16px;
+    max-width: none;
+  }
+  .about-credentials {
+    grid-template-columns: 1fr;
+    margin-top: 28px;
+  }
+  .about-credentials > div { padding: 16px 18px; }
+  .about-credentials strong { font-size: 13.5px; }
+  .about-credentials small { font-size: 10.5px; }
+
+  /* === Refs (filter chips scroll horizontally) === */
+  .refs-controls {
+    gap: 6px;
+    margin: 0 calc(var(--pad) * -1) 22px;
+    padding: 2px var(--pad) 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+  .refs-controls::-webkit-scrollbar { display: none; }
+  .ref-chip {
+    padding: 8px 14px;
+    font-size: 12px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .refs-grid { gap: 10px; grid-template-columns: 1fr; }
+  .ref-card.x-6, .ref-card.x-4, .ref-card.x-3,
+  .ref-card.x-5, .ref-card.x-7, .ref-card.x-8 {
+    grid-column: 1 / -1;
+    aspect-ratio: 4/3;
+    min-height: 0;
+  }
+  .ref-card .stamp { top: 12px; left: 14px; right: 14px; font-size: 9.5px; }
+  .ref-card .meta { left: 14px; right: 14px; bottom: 14px; }
+  .ref-card .meta strong { font-size: 17px; }
+  .ref-card .meta small { font-size: 10px; }
+  .ref-card .meta .pill { font-size: 9.5px; padding: 3px 8px; }
+
+  .refs-foot {
+    margin-top: 28px;
+    font-size: 11px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .refs-foot .btn { width: 100%; justify-content: center; }
+
+  /* === B2B === */
+  .b2b-grid { gap: 36px; }
+  .b2b h2 {
+    font-size: clamp(30px, 8vw, 40px);
+    margin-bottom: 18px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .b2b-lede { font-size: 15px; line-height: 1.65; }
+  .b2b-perk {
+    padding: 18px 18px;
+    gap: 14px;
+    grid-template-columns: 28px 1fr auto;
+  }
+  .b2b-perk .ico svg { width: 20px; height: 20px; }
+  .b2b-perk strong { font-size: 14.5px; }
+  .b2b-perk small { font-size: 10.5px; }
+
+  .partners { margin-top: 40px; padding-top: 26px; }
+  .partners-row { grid-template-columns: repeat(3, 1fr); }
+  .partners-row > div { height: 76px; font-size: 16px; }
+  .partners-row > div small { font-size: 8.5px; }
+
+  /* === Process === */
+  .process-list { grid-template-columns: 1fr 1fr; }
+  .process-step { padding: 22px 18px; min-height: 0; }
+  .process-step .num { font-size: 28px; margin-bottom: 14px; }
+  .process-step h4 { font-size: 14.5px; margin-bottom: 6px; }
+  .process-step p { font-size: 13px; line-height: 1.5; }
+  .process-step .day { padding-top: 14px; font-size: 9.5px; }
+
+  /* === Testimonials === */
+  .tlist { gap: 12px; }
+  .tcard { padding: 24px 22px 20px; }
+  .tcard blockquote { font-size: 15.5px; line-height: 1.5; margin-bottom: 18px; }
+  .tcard .quote-mark { font-size: 44px; margin-bottom: 6px; }
+  .tcard .author { padding-top: 16px; }
+  .tcard .author strong { font-size: 13px; }
+  .tcard .author small { font-size: 10px; }
+  .tcard .stars { font-size: 13px; letter-spacing: 3px; }
+
+  .review-strip {
+    margin-top: 36px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .review-strip > div { padding: 16px 16px; gap: 10px; }
+  .review-strip strong { font-size: 22px; }
+  .review-strip strong small { font-size: 11px; margin-left: 2px; }
+  .review-strip .lbl { font-size: 9.5px; letter-spacing: 0.1em; }
+
+  /* === Area === */
+  .area-grid { gap: 36px; }
+  .area-map { aspect-ratio: 4/3; }
+  .area-map .legend {
+    font-size: 9px;
+    left: 14px; bottom: 14px;
+    max-width: calc(100% - 28px);
+    line-height: 1.4;
+  }
+  .area-map .compass { right: 14px; top: 14px; font-size: 9px; }
+  .area-map .compass strong { font-size: 18px; }
+  .area-map .pin-label.main { font-size: 9.5px; padding: 3px 7px; }
+  .area-map .pin-label:not(.main) { display: none; }
+
+  .area-list h2 {
+    font-size: clamp(28px, 7.5vw, 38px);
+    margin-bottom: 16px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .area-list p { font-size: 15px; max-width: none; }
+  .area-cities {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 14px;
+    padding-top: 14px;
+  }
+  .area-cities span { font-size: 13.5px; padding: 7px 0; }
+  .area-cities span small { font-size: 10px; }
+
+  /* === FAQ === */
+  .faq-grid { gap: 28px; grid-template-columns: 1fr; }
+  .faq-title { font-size: clamp(30px, 8vw, 40px); line-height: 1.05; }
+  .faq-intro { font-size: 14.5px; }
+  .faq-q {
+    padding: 18px 0;
+    font-size: 16px;
+    gap: 14px;
+    line-height: 1.3;
+  }
+  .faq-q .ico { width: 28px; height: 28px; }
+  .faq-q .ico svg { width: 12px; height: 12px; }
+  .faq-a-inner { padding: 0 0 20px 0; font-size: 14.5px; line-height: 1.65; }
+
+  /* === Contact === */
+  .contact h2 {
+    font-size: clamp(34px, 9vw, 46px);
+    margin-bottom: 22px;
+    line-height: 1.05;
+  }
+  .contact-lede {
+    font-size: 15px;
+    line-height: 1.65;
+    margin-bottom: 28px;
+    max-width: none;
+  }
+  .contact-info { grid-template-columns: 1fr; margin-top: 0; }
+  .ci-item { padding: 22px 22px 20px; }
+  .ci-main { font-size: 17px; }
+  .ci-item.ci-primary .ci-main { font-size: 24px; letter-spacing: -0.025em; }
+  .ci-sub { font-size: 10px; }
+  .ci-top { font-size: 9.5px; }
+
+  .cform { padding: 26px 22px; gap: 20px; }
+  .cform-fields { gap: 20px; }
+  .cform-row { grid-template-columns: 1fr; gap: 20px; }
+  .cform-head { padding-bottom: 14px; }
+  .cform-head h3 { font-size: 20px; }
+  .cform-head small { font-size: 9.5px; }
+  .cf label { font-size: 10px; }
+  /* Prevent iOS auto-zoom on focus (any input < 16px triggers zoom) */
+  .cf input, .cf textarea, .cf select { font-size: 16px; padding: 12px 0 14px; }
+  .cf-radio { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .cf-radio label { padding: 12px 12px; font-size: 13px; }
+  .cform-submit {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+    padding-top: 16px;
+  }
+  .cform-submit small { max-width: none; font-size: 10px; order: 2; text-align: center; }
+  .cform-submit .btn { width: 100%; justify-content: center; padding: 16px 20px; order: 1; }
+
+  /* === Footer === */
+  .foot { padding: 56px 0 calc(96px + env(safe-area-inset-bottom)); }
+  .foot-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+    margin-bottom: 36px;
+  }
+  .foot-grid > div:first-child { grid-column: 1 / -1; }
+  .foot .brand { font-size: 22px; margin-bottom: 12px; }
+  .foot p { font-size: 13px; max-width: none; line-height: 1.55; }
+  .foot h5 { font-size: 10.5px; margin-bottom: 12px; }
+  .foot ul { font-size: 13px; gap: 8px; }
+  .foot-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 10px;
+    gap: 12px;
+    line-height: 1.5;
+  }
+  .foot-bottom .links { gap: 14px; }
+
+  /* === Floating CTA — pill on mobile === */
+  .float-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: auto;
+    height: 52px;
+    padding: 0 20px 0 17px;
+    border-radius: 99px;
+    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    box-shadow: 0 14px 36px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.18);
+  }
+  .float-cta::after {
+    content: "Hívás";
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 14.5px;
+    letter-spacing: -0.005em;
+    line-height: 1;
+  }
+  .float-cta svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+  /* === Lightbox === */
+  .lightbox { padding: 16px; }
+  .lightbox-card { aspect-ratio: 4/5; }
+  .lightbox-card .meta strong { font-size: 22px; }
+  .lightbox-card .meta small { font-size: 10.5px; }
+  .lightbox-card .stamp { top: 14px; left: 14px; right: 14px; font-size: 10px; }
+  .lightbox-card .meta { left: 16px; right: 16px; bottom: 16px; }
+  .lightbox-close { top: -42px; }
+
+  /* === Reveal — gentler on mobile (less jank) === */
+  .reveal { transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+}
+
+/* =========================================================
+   Very small phones (≤ 420px) — extra tightening
+   ========================================================= */
+@media (max-width: 420px) {
+  :root { --pad: 18px; }
+
+  .topbar { font-size: 11.5px; }
+  .topbar-inner { height: 34px; }
+  .topbar-right span:not(:has(.live-dot)) { display: none; }
+
+  .nav { height: 58px; }
+  main { padding-top: 58px; }
+  .mobile-menu { top: calc(58px + env(safe-area-inset-top)); }
+  .brand { font-size: 15.5px; }
+  .brand-mark { width: 32px; height: 32px; font-size: 14px; }
+  .menu-toggle { width: 44px; height: 44px; }
+
+  .hero h1 { font-size: clamp(38px, 12vw, 50px); line-height: 0.98; }
+  .hero-meta { font-size: 10px; gap: 8px 14px; }
+
+  .section-head h2,
+  .about-body h2,
+  .b2b h2,
+  .area-list h2,
+  .faq-title { font-size: clamp(26px, 8vw, 34px); }
+  .contact h2 { font-size: clamp(30px, 9vw, 40px); }
+
+  .process-list { grid-template-columns: 1fr; }
+  .review-strip { grid-template-columns: 1fr; }
+  .area-cities { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr; }
+
+  .hero-visual .badge-tape {
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+  }
+  .hero-visual .badge-tape .ico { display: none; }
+
+  .partners-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =========================================================
+   Landscape phones — keep mobile menu scrollable
+   ========================================================= */
+@media (max-width: 900px) and (max-height: 500px) and (orientation: landscape) {
+  .mobile-menu { padding-top: 12px; padding-bottom: 24px; }
+  .mobile-menu a { padding: 12px 0; font-size: 18px; }
+  .mobile-cta { margin-top: 14px; padding: 12px 18px; }
 }
