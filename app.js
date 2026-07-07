@@ -45,6 +45,19 @@
     });
   });
 
+  // Service cards: tap to expand on touch devices (desktop uses :hover)
+  const services = document.querySelectorAll('[data-service]');
+  if (services.length && window.matchMedia('(hover: none)').matches) {
+    const closeServices = (except) => services.forEach(s => { if (s !== except) s.classList.remove('is-open'); });
+    services.forEach(s => s.addEventListener('click', () => {
+      const willOpen = !s.classList.contains('is-open');
+      closeServices(s);
+      s.classList.toggle('is-open', willOpen);
+    }));
+    document.addEventListener('click', (e) => { if (!e.target.closest('[data-service]')) closeServices(null); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeServices(null); });
+  }
+
   // Reveal on scroll
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -56,19 +69,7 @@
   }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  // Reference filter
-  const chips = document.querySelectorAll('.ref-chip');
   const cards = document.querySelectorAll('.ref-card');
-  chips.forEach(chip => chip.addEventListener('click', () => {
-    chips.forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    const f = chip.dataset.filter;
-    cards.forEach(c => {
-      const tags = (c.dataset.tags || '').split(' ');
-      const show = f === 'all' || tags.includes(f);
-      c.style.display = show ? '' : 'none';
-    });
-  }));
 
   // Lightbox
   const lb = document.querySelector('.lightbox');
@@ -76,6 +77,7 @@
   const lbStamp = lb.querySelector('[data-lb-stamp]');
   const lbName = lb.querySelector('[data-lb-name]');
   const lbMeta = lb.querySelector('[data-lb-meta]');
+  const lbImg = lb.querySelector('[data-lb-img]');
   let lbIdx = 0;
   const visibleCards = () => Array.from(cards).filter(c => c.style.display !== 'none');
   function showLb(i) {
@@ -86,12 +88,12 @@
     lbStamp.textContent = c.dataset.stamp || '';
     lbName.textContent = c.dataset.name || '';
     lbMeta.textContent = c.dataset.meta || '';
-    const cls = c.querySelector('.img').className;
-    lbCard.querySelector('.img').className = cls;
+    const src = c.querySelector('.img img');
+    if (src) { lbImg.src = src.getAttribute('src'); lbImg.alt = src.getAttribute('alt') || ''; }
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-  cards.forEach((c, i) => c.addEventListener('click', () => {
+  cards.forEach((c) => c.addEventListener('click', () => {
     const list = visibleCards();
     const idx = list.indexOf(c);
     showLb(idx);
