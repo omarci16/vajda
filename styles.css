@@ -336,15 +336,7 @@ section { padding: clamp(72px, 10vw, 140px) 0; position: relative; }
 .service:hover .service-meta,
 .service:hover .service-cta { color: var(--bg-3); }
 .service:hover .service-cta { border-top-color: rgba(242,237,227,.2); }
-.service:hover .service-icon { background: rgba(242,237,227,.1); border-color: rgba(242,237,227,.2); color: var(--bg); }
 .service-num { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; color: var(--muted); transition: color .25s ease; }
-.service-icon {
-  margin-top: 24px; width: 56px; height: 56px; border-radius: 50%;
-  display: grid; place-items: center;
-  border: 1px solid var(--line-2); background: var(--bg); color: var(--ink-2);
-  transition: all .25s ease;
-}
-.service-icon svg { width: 26px; height: 26px; }
 .service h3 { font-family: var(--f-display); font-weight: 700; font-size: 24px; letter-spacing: -0.025em; margin: 22px 0 10px; line-height: 1.15; }
 .service p { margin: 0 0 18px; font-size: 14.5px; line-height: 1.55; color: var(--ink-3); transition: color .25s ease; }
 .service:hover p { color: rgba(242,237,227,.78); }
@@ -379,9 +371,10 @@ section { padding: clamp(72px, 10vw, 140px) 0; position: relative; }
 .service.is-open .service-panel { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
 
 .service-shot {
-  position: relative; z-index: 0; width: 100%; aspect-ratio: 1 / 1;
+  position: relative; z-index: 0;
+  margin: -34px -30px 0;
+  height: 172px;
   background: var(--ink-2); overflow: hidden;
-  border: 1px solid rgba(242,237,227,.1);
 }
 .service-shot img {
   position: absolute; inset: 0; width: 100%; height: 100%;
@@ -396,13 +389,8 @@ section { padding: clamp(72px, 10vw, 140px) 0; position: relative; }
 }
 .service-shot::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(16,15,14,.5) 0%, transparent 30%, transparent 68%, rgba(16,15,14,.65) 100%);
+  background: linear-gradient(180deg, transparent 55%, rgba(16,15,14,.4) 100%);
   pointer-events: none;
-}
-.service-shot .shot-tag {
-  position: absolute; top: 14px; left: 14px; z-index: 1;
-  font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
-  color: rgba(242,237,227,.72);
 }
 .service-panel-body h3 {
   font-family: var(--f-display); font-weight: 700; font-size: 20px;
@@ -1256,8 +1244,7 @@ section { padding: clamp(72px, 10vw, 140px) 0; position: relative; }
   }
   .service h3 { font-size: 20px; margin: 14px 0 8px; line-height: 1.2; }
   .service p { font-size: 14px; margin-bottom: 14px; line-height: 1.5; }
-  .service-icon { width: 48px; height: 48px; margin-top: 16px; }
-  .service-icon svg { width: 22px; height: 22px; }
+  .service-shot { margin: -26px -22px 0; height: 148px; }
   .service-num { font-size: 10px; }
   .service-meta { font-size: 10px; letter-spacing: 0.1em; }
   .service-cta { padding-top: 14px; margin-top: 14px; font-size: 10.5px; }
