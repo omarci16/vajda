@@ -125,6 +125,31 @@
         if (!valid) ok = false;
       });
       if (!ok) return;
+
+      const data = new FormData(form);
+      const tipus = data.get('tipus') === 'ceg' ? 'Cég / építőipar' : 'Magánszemély';
+      const name = (data.get('name') || '').trim();
+      const phone = (data.get('phone') || '').trim();
+      const email = (data.get('email') || '').trim();
+      const service = data.get('service') || '';
+      const sizes = (data.get('sizes') || '').trim();
+      const message = (data.get('message') || '').trim();
+
+      const subject = `Árajánlatkérés — ${name} (${service})`;
+      const body = [
+        `Ügyfél típusa: ${tipus}`,
+        `Név: ${name}`,
+        `Telefon: ${phone}`,
+        `E-mail: ${email}`,
+        `Szolgáltatás: ${service}`,
+        sizes ? `Nyílászáró méretek: ${sizes}` : null,
+        '',
+        'Részletek:',
+        message,
+      ].filter((line) => line !== null).join('\n');
+
+      window.location.href = `mailto:vajgy76@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
       form.classList.add('sent');
       const success = form.querySelector('.cform-success');
       success.classList.add('show');

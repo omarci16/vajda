@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Vajda Gyula redőnyös">
+  <rect width="100" height="100" rx="14" fill="#191816"/>
+  <!-- redőny slat texture -->
+  <g stroke="#F2EDE3" stroke-width="1.4" opacity="0.10">
+    <line x1="20" y1="24" x2="80" y2="24"/>
+    <line x1="20" y1="32" x2="80" y2="32"/>
+    <line x1="20" y1="40" x2="80" y2="40"/>
+    <line x1="20" y1="48" x2="80" y2="48"/>
+    <line x1="20" y1="56" x2="80" y2="56"/>
+    <line x1="20" y1="64" x2="80" y2="64"/>
+    <line x1="20" y1="72" x2="80" y2="72"/>
+  </g>
+  <!-- V lettermark -->
+  <path d="M28 29 L50 71 L72 29" fill="none" stroke="#C2701C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

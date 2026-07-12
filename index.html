@@ -15,6 +15,13 @@
 <meta name="ICBM" content="47.5316, 21.6273" />
 <link rel="canonical" href="https://vajdagyula-redony.hu/" />
 
+<!-- Icons & manifest -->
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
+
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="hu_HU" />
@@ -23,18 +30,26 @@
 <meta property="og:title" content="Vajda Gyula Redőnyös Debrecen — Árnyékolástechnika minden mennyiségben" />
 <meta property="og:description" content="22 év szakmai tapasztalat. Redőny, szúnyogháló, motoros árnyékolók építőipari kivitelezőknek és magánszemélyeknek Debrecenben és Hajdú-Bihar megyében." />
 <meta property="og:image" content="https://vajdagyula-redony.hu/og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Vajda Gyula redőnyös és árnyékolástechnika Debrecen" />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Vajda Gyula Redőnyös Debrecen" />
 <meta name="twitter:description" content="Árnyékolástechnika kivitelezés Debrecenben. Építőipari partnereknek és magánszemélyeknek." />
+<meta name="twitter:image" content="https://vajdagyula-redony.hu/og.jpg" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
+<link rel="preload" as="image" href="vajdahero.webp" type="image/webp" fetchpriority="high" />
 <link rel="stylesheet" href="styles.css" />
+
+<!-- Reveal-animated content stays visible if JS is disabled / not executed -->
+<noscript><style>.reveal{opacity:1 !important;transform:none !important}</style></noscript>
 
 <!-- Schema.org LocalBusiness -->
 <script type="application/ld+json">
@@ -73,6 +88,24 @@
   ],
   "founder": { "@type": "Person", "name": "Vajda Gyula" },
   "foundingDate": "2003",
+  "knowsLanguage": "hu",
+  "currenciesAccepted": "HUF",
+  "paymentAccepted": "Készpénz, bankkártya, átutalás",
+  "slogan": "Árnyékolástechnika egy kézből, Debrecenben.",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Árnyékolástechnikai szolgáltatások",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tokos és vakolható redőny szerelése", "areaServed": "Debrecen" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Motoros és okos redőny (Somfy, Becker)", "areaServed": "Debrecen" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Szúnyogháló rendszerek", "areaServed": "Debrecen" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Belső árnyékolók — roló, reluxa, pliszé, sávroló", "areaServed": "Debrecen" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Karos és kazettás napellenző", "areaServed": "Debrecen" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Külső árnyékoló és zip screen", "areaServed": "Debrecen" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Harmonikaajtó és térelválasztó", "areaServed": "Debrecen" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Redőny szervíz, javítás, motorcsere", "areaServed": "Debrecen" } }
+    ]
+  },
   "sameAs": [
     "https://www.facebook.com/vajdagyula.redony",
     "https://www.instagram.com/vajdagyula.redony"
@@ -162,11 +195,10 @@
           <span>B2B &amp; magán</span>
         </div>
         <h1 class="reveal">
-          Árnyék,<br/>
-          <span class="amber">precízen</span><br/>
-          <span class="it">szabva</span> az<br/>
-          épületre.
+          Redőnyös<br/>
+          <span class="amber">Debrecenben.</span>
         </h1>
+        <p class="hero-tagline reveal">Árnyék, <span class="amber">precízen</span> szabva az épületre.</p>
         <p class="hero-lede reveal">
           Vajda Gyula vagyok, redőnyös és árnyékolástechnikai szakember Debrecenben. Generálkivitelezőknek, építőipari partnereknek és magánszemélyeknek dolgozom: pontos felmérés, gyártói minőség, megbízható beépítés — több mint 22 éve.
         </p>
@@ -195,8 +227,11 @@
         </div>
       </div>
 
-      <div class="hero-visual reveal" aria-hidden="true">
-        <img src="vajdahero.png" alt="" fetchpriority="high" />
+      <div class="hero-visual reveal">
+        <picture>
+          <source srcset="vajdahero.webp" type="image/webp" />
+          <img src="vajdahero.jpg" width="1024" height="1536" alt="Vajda Gyula redőnyös és árnyékolástechnikai szakember Debrecenben" fetchpriority="high" />
+        </picture>
       </div>
     </div>
   </div>
@@ -215,7 +250,7 @@
     <div class="section-head reveal">
       <div>
         <div class="eyebrow">01 — Szolgáltatások</div>
-        <h2>Az árnyékolás teljes <em>spektruma</em>, egy kézből.</h2>
+        <h2>Redőny, szúnyogháló és árnyékolás Debrecenben — <em>egy kézből.</em></h2>
       </div>
       <p>Modern alumínium és műanyag rendszerek, motoros és kézi működtetéssel — a kézi felhúzós redőnytől a motoros zip screenig. Minden termékcsalád egyedi méretre, beépítési csomóponttal, gyártói garanciával. Vidd az egeret a kártyára (mobilon koppints rá) a részletekért.</p>
     </div>
@@ -223,8 +258,8 @@
     <div class="services-grid">
 
       <article class="service reveal" data-service>
-        <div class="service-shot warm" aria-hidden="true">
-          <img src="tokos.jpg" alt="" loading="lazy" />
+        <div class="service-shot warm">
+          <img src="tokos.jpg" alt="Tokos és vakolható redőny szerelés Debrecenben" loading="lazy" />
         </div>
         <h3>Tokos &amp; vakolható redőny</h3>
         <p>Utólag és építés közben szerelhető rendszerek. Hőhídmentes kivitelezés, csendes üzem, tisztán illeszkedő tok. Műanyag és alumínium profilokkal.</p>
@@ -243,8 +278,8 @@
       </article>
 
       <article class="service reveal" data-service>
-        <div class="service-shot cool" aria-hidden="true">
-          <img src="motorosredony.jpg" alt="" loading="lazy" />
+        <div class="service-shot cool">
+          <img src="motorosredony.jpg" alt="Motoros redőny Somfy motorral és okos vezérléssel" loading="lazy" />
         </div>
         <h3>Motoros &amp; okos redőny</h3>
         <p>Somfy és Becker meghajtások, fali kapcsoló, távirányító, napérzékelő, időzítés. Smart-home integráció KNX, Loxone, Tahoma és Apple Home rendszerekhez.</p>
@@ -263,8 +298,8 @@
       </article>
 
       <article class="service reveal" data-service>
-        <div class="service-shot warm" aria-hidden="true">
-          <img src="szunyoghalo.jpg" alt="" loading="lazy" />
+        <div class="service-shot warm">
+          <img src="szunyoghalo.jpg" alt="Szúnyogháló rendszer ablakra és ajtóra, Debrecen" loading="lazy" />
         </div>
         <h3>Szúnyogháló rendszerek</h3>
         <p>Fix kerettel, pliszé harmonikás, rolós és ajtós megoldások. Üvegszálas, alu és pollenszűrő háló — házi kedvencbarát kivitelben is.</p>
@@ -283,8 +318,8 @@
       </article>
 
       <article class="service reveal" data-service>
-        <div class="service-shot cool" aria-hidden="true">
-          <img src="belso-arnyekolo.jpg" alt="" loading="lazy" />
+        <div class="service-shot cool">
+          <img src="belso-arnyekolo.jpg" alt="Belső árnyékoló — sötétítő roló, reluxa és pliszé függöny" loading="lazy" />
         </div>
         <h3>Belső árnyékolók</h3>
         <p>Sötétítő és fényáteresztő roló, sávroló, reluxa és pliszé függöny — minden ablakra, akár tetőtéri és ferde ablakra is.</p>
@@ -303,8 +338,8 @@
       </article>
 
       <article class="service reveal" data-service>
-        <div class="service-shot warm" aria-hidden="true">
-          <img src="kazettasnapellenzo.webp" alt="" loading="lazy" />
+        <div class="service-shot warm">
+          <img src="kazettasnapellenzo.webp" alt="Karos, kazettás napellenző terasz fölé, motoros" loading="lazy" />
         </div>
         <h3>Karos &amp; kazettás napellenző</h3>
         <p>Terasz, étterem-terasz, erkély árnyékolása. Karos, kazettás és féltető kivitel akár 7 m hosszúságban — szélérzékelővel is.</p>
@@ -323,8 +358,11 @@
       </article>
 
       <article class="service reveal" data-service>
-        <div class="service-shot cool" aria-hidden="true">
-          <img src="zipscreen.png" alt="" loading="lazy" />
+        <div class="service-shot cool">
+          <picture>
+            <source srcset="zipscreen.webp" type="image/webp" />
+            <img src="zipscreen.png" alt="Külső árnyékoló zip screen modern homlokzaton" loading="lazy" />
+          </picture>
         </div>
         <h3>Külső árnyékoló &amp; zip screen</h3>
         <p>Vezetősínes textilárnyékoló — szélálló kivitel, hatékony hővédelem nyáron, természetes fény bent. Modern építészeti homlokzatokhoz.</p>
@@ -343,8 +381,8 @@
       </article>
 
       <article class="service reveal" data-service>
-        <div class="service-shot warm" aria-hidden="true">
-          <img src="harmonikaajto.webp" alt="" loading="lazy" />
+        <div class="service-shot warm">
+          <img src="harmonikaajto.webp" alt="Harmonikaajtó és térelválasztó egyedi méretre" loading="lazy" />
         </div>
         <h3>Harmonikaajtó &amp; térelválasztó</h3>
         <p>Beltéri térelválasztáshoz — alumínium és műanyag profilszerkezet, halk vezetősín, sima nyitás. Egyedi méretre, fakihatású fóliákkal.</p>
@@ -363,8 +401,8 @@
       </article>
 
       <article class="service reveal" data-service>
-        <div class="service-shot cool" aria-hidden="true">
-          <img src="szereles.webp" alt="" loading="lazy" />
+        <div class="service-shot cool">
+          <img src="szereles.webp" alt="Redőny szervíz, javítás és motorcsere Debrecenben" loading="lazy" />
         </div>
         <h3>Szervíz, javítás, motorcsere</h3>
         <p>Bármilyen márkájú régi redőny szervízelése: gurtni-, hevedercsere, motorral való felszerelés, lamellapótlás, mechanika javítás 48 órán belül.</p>
@@ -411,7 +449,7 @@
 
       <div class="about-body">
         <div class="eyebrow reveal">02 — Bemutatkozás</div>
-        <h2 class="reveal">Egy ember, egy szakma — <em>és minden, ami közte van.</em></h2>
+        <h2 class="reveal">    Több mint két évtized szakmai tapasztalata minden egyes munkában.</em></h2>
         <p class="reveal">
           <strong>2003 óta foglalkozom árnyékolástechnikával.</strong> Ez idő alatt családi házak, irodaházak, panelek, ipari csarnokok, éttermek és társasházak felmérését, szállítását és beépítését végeztem el — magam, a saját csapatommal.
         </p>
@@ -838,8 +876,8 @@
 
         <div class="cform-success">
           <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <h3>Megérkezett — köszönöm!</h3>
-          <p>24 órán belül visszahívlak e-mailben &amp; telefonon. Ha sürgős, hívj közvetlenül: <a href="tel:+36702140403" style="border-bottom: 1px solid currentColor;">+36 70 214 0403</a>.</p>
+          <h3>Már majdnem kész!</h3>
+          <p>Megnyitottuk az e-mail alkalmazásodat egy előre kitöltött üzenettel — nézd át, és küldd el. Ha nem nyílt meg automatikusan, írj közvetlenül: <a href="mailto:vajgy76@gmail.com" style="border-bottom: 1px solid currentColor;">vajgy76@gmail.com</a>, vagy hívj: <a href="tel:+36702140403" style="border-bottom: 1px solid currentColor;">+36 70 214 0403</a>.</p>
         </div>
       </form>
     </div>
